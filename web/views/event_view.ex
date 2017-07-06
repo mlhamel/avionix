@@ -11,10 +11,12 @@ defmodule Avionix.EventView do
 
   def render("event.json", %{event: event}) do
     %{id: event.id,
+      hex: event.hex,
+      altitude: event.altitude,
       speed: event.speed,
       flight: event.flight,
       track: event.track,
-      latitude: event.latitude,
-      longitude: event.longitude}
+      lat: event.lat,
+      lon: event.lon}
   end
 end

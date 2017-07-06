@@ -14,13 +14,13 @@ defmodule Avionix.Router do
   end
 
   scope "/", Avionix do
-    pipe_through :browser # Use the default browser stack
-
+    pipe_through :browser
     get "/", PageController, :index
-    resources "/events", EventController
   end
-  # Other scopes may use custom stacks.
-  # scope "/api", Avionix do
-  #   pipe_through :api
-  # end
+
+
+  scope "/events", Avionix do
+    pipe_through :api
+    resources "/", EventController
+  end
 end

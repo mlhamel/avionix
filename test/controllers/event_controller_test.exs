@@ -2,7 +2,7 @@ defmodule Avionix.EventControllerTest do
   use Avionix.ConnCase
 
   alias Avionix.Event
-  @valid_attrs %{flight: "some content", latitude: 42, longitude: 42, speed: 42, track: "some content"}
+  @valid_attrs %{flight: "some content", lat: 42, lon: 42, altitude: 100, hex: "11", speed: 42, track: "some content"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -17,12 +17,15 @@ defmodule Avionix.EventControllerTest do
   test "shows chosen resource", %{conn: conn} do
     event = Repo.insert! %Event{}
     conn = get conn, event_path(conn, :show, event)
-    assert json_response(conn, 200)["data"] == %{"id" => event.id,
+    assert json_response(conn, 200)["data"] == %{
+      "id" => event.id,
+      "hex" => event.hex,
+      "altitude" => event.altitude,
       "speed" => event.speed,
       "flight" => event.flight,
       "track" => event.track,
-      "latitude" => event.latitude,
-      "longitude" => event.longitude}
+      "lat" => event.lat,
+      "lon" => event.lon}
   end
 
   test "does not show resource and instead throw error when id is nonexistent", %{conn: conn} do

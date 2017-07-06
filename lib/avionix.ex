@@ -7,24 +7,26 @@ defmodule Avionix do
     import Supervisor.Spec, warn: false
 
     children = [
-      # Start the endpoint when the application starts
       supervisor(Avionix.Endpoint, []),
-      # Start the Ecto repository
       supervisor(Avionix.Repo, []),
-      # Here you could define other workers and supervisors as children
-      # worker(Avionix.Worker, [arg1, arg2, arg3]),
+      supervisor(Task.Supervisor, [[name: Avionix.TaskSupervisor]]),
+#      worker(Task, [&fetch_planes/0]),
     ]
 
-    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Avionix.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
-  # Tell Phoenix to update the endpoint configuration
-  # whenever the application is updated.
   def config_change(changed, _new, removed) do
     Avionix.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp fetch_planes do
+    Process.registered |> Enum.sort |> IO.inspect
+    Dump1090.start
+    Dump1090.get!("/data.json")
+    #Poison.decode!(body), as: [Avionix.Event]
+    System.halt
   end
 end

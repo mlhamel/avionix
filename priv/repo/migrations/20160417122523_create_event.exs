@@ -3,11 +3,13 @@ defmodule Avionix.Repo.Migrations.CreateEvent do
 
   def change do
     create table(:events) do
-      add :speed, :integer
+      add :hex, :string
       add :flight, :string
-      add :track, :string
-      add :latitude, :integer
-      add :longitude, :integer
+      add :lat, :float
+      add :lon, :float
+      add :altitude, :integer
+      add :track, :integer
+      add :speed, :integer
 
       timestamps
     end

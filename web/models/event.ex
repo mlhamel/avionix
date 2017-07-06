@@ -2,16 +2,19 @@ defmodule Avionix.Event do
   use Avionix.Web, :model
 
   schema "events" do
-    field :speed, :integer
+    field :hex, :string
     field :flight, :string
-    field :track, :string
-    field :latitude, :integer
-    field :longitude, :integer
+    field :lat, :float
+    field :lon, :float
+    field :altitude, :integer
+    field :track, :integer
+    field :speed, :integer
 
     timestamps
   end
 
-  @required_fields ~w(speed flight track latitude longitude)
+  @derive [Poison.Encoder]
+  @required_fields ~w(hex flight lat lon altitude track speed)
   @optional_fields ~w()
 
   @doc """
@@ -23,7 +26,6 @@ defmodule Avionix.Event do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> validate_inclusion(:latitude, -90..90)
-    |> validate_inclusion(:latitude, -180..180)
+    |> update_change(:flight, &String.strip/1)
   end
 end

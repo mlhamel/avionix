@@ -4,13 +4,19 @@ defmodule Avionix.Mixfile do
   def project do
     [app: :avionix,
      version: "0.0.1",
-     elixir: "~> 1.0",
+     elixir: "~> 1.2",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      aliases: aliases,
-     deps: deps]
+     deps: deps,
+     preferred_cli_env: [
+       vcr: :test,
+       "vcr.delete": :test,
+       "vcr.check": :test,
+       "vcr.show": :test
+     ]]
   end
 
   # Configuration for the OTP application.
@@ -19,7 +25,8 @@ defmodule Avionix.Mixfile do
   def application do
     [mod: {Avionix, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :sqlite_ecto]]
+                    :phoenix_ecto, :postgrex, :sqlite_ecto, :httpoison,
+                    :ex1090]]
   end
 
   # Specifies which paths to compile per environment.
@@ -37,7 +44,12 @@ defmodule Avionix.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
-     {:sqlite_ecto, "~> 1.0.0"}]
+     {:sqlite_ecto, "~> 1.0.0"},
+     {:httpoison, "~> 0.8.0"},
+     {:poison, "~> 1.5.2"},
+     {:exrm, "~> 1.0.3"},
+     {:ex1090, github: "mlhamel/ex1090"},
+     {:exvcr, "~> 0.7", only: :test}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

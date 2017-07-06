@@ -1,0 +1,24 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": [],
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "http://127.0.0.1:8080/data.json"
+    },
+    "response": {
+      "body": "[\n{\"hex\":\"06a064\", \"flight\":\"QTR764  \", \"lat\":45.414322, \"lon\":-73.817923, \"altitude\":7825, \"track\":26, \"speed\":303}\n]\n",
+      "headers": {
+        "Server": "Dump1090",
+        "Content-Type": "application/json;charset=utf-8",
+        "Connection": "keep-alive",
+        "Content-Length": "119",
+        "Access-Control-Allow-Origin": "*"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]
